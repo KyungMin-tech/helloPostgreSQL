@@ -15,9 +15,9 @@ PostgreSQL 연습
 #### properties 파일
 
 ~~~
-db.url=jdbc:postgresql://localhost:5432/testdb
+db.url=jdbc:postgresql://localhost:5432/(만든 DB이름)
 db.user=postgres
-db.passwd= "공백"
+db.passwd= "(설정한 비밀번호)"
 ~~~
 
 ### 사용한 데이터테이블 예시
