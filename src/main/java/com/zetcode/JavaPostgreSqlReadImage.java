@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//imagesÅ×ÀÌºí¿¡¼­ ÀÌ¹ÌÁö¸¦ ÀĞ¾î¿À´Â Å¬·¡½º
+//imagesí…Œì´ë¸”ì—ì„œ ì´ë¯¸ì§€ë¥¼ ì½ì–´ì˜¤ëŠ” í´ë˜ìŠ¤
 public class JavaPostgreSqlReadImage {
 
 	public static void main(String[] args) {
@@ -19,25 +19,25 @@ public class JavaPostgreSqlReadImage {
 		String url = "jdbc:postgresql://localhost:5432/mydb";
 		String user = "postgres";
 		String password = "postIT1206";
-		//µ¥ÀÌÅÍº£ÀÌ½º Á¦ÀÌºí¿¡¼­ ÀÌ¹ÌµğÀÇ »çÀÌÁî¿Í µ¥ÀÌÅÍ¸¦ ¼±ÅÃÇÑ´Ù
+		//ë°ì´í„°ë² ì´ìŠ¤ í…Œì´ë¸”ì—ì„œ ì´ë¯¸ì§€ì˜ ì‚¬ì´ì¦ˆì™€ ë°ì´í„°ë¥¼ ì„ íƒí•œë‹¤
 		String query = "SELECT data, LENGTH(data) FROM images WHERE id = 1";
 
 		try (Connection conn = DriverManager.getConnection(url, user, password);
 				PreparedStatement pstmt = conn.prepareStatement(query);
 				ResultSet rs = pstmt.executeQuery()) {
 
-			rs.next();//Ä¿¼­°¡ Ã¹¹øÂ° Çà ¾Õ¿¡ À§Ä¡ÇÏ´Ù°¡ next()¸¦ ¸¸³ª¸é ´ÙÀ½ÇàÀ¸·Î, ³²ÀºÇàÀÌ ¾øÀ¸¸é false
-			//ÀÌ¹ÌÁö µ¥ÀÌÅÍ¿Í °°Àº ¹ÙÀÌÆ®½ºÆ®¸²À» FileOutputStreamÀ» ÀÌ¿ëÇØ¼­ ÀĞ¾î¿Â´Ù
+			rs.next();//ì»¤ì„œê°€ ì²«ë²ˆì§¸ í–‰ ì•ì— ìœ„ì¹˜í•˜ë‹¤ê°€ next()ë¥¼ ë§Œë‚˜ë©´ ë‹¤ìŒí–‰ìœ¼ë¡œ, ë‚¨ì€í–‰ì´ ì—†ìœ¼ë©´ false
+			//ì´ë¯¸ì§€ ë°ì´í„°ì™€ ê°™ì€ ë°”ì´íŠ¸ìŠ¤íŠ¸ë¦¼ì„ FileOutputStreamì„ ì´ìš©í•´ì„œ ì½ì–´ì˜¨ë‹¤
 			File myFile = new File("src/main/resources/sid.jpg");
 
 			try (FileOutputStream fos = new FileOutputStream(myFile)) {
 
-				int len = rs.getInt(2);//ÀÌ¹ÌÁö µ¥ÀÌÅÍÀÇ ±æÀÌ¸¦ ¹ÙÀÌÆ® ´ÜÀ§·Î ¾ò´Â´Ù
-				byte[] buf = rs.getBytes("data");//getByte¸Ş¼­µå¸¦ ÅëÇØ ¸ğµç ¹ÙÀÌÆ®¸¦ ¹ÙÀÌÆ® ¹è¿­·Î °Ë»öÇÑ´Ù
+				int len = rs.getInt(2);//ì´ë¯¸ì§€ ë°ì´í„°ì˜ ê¸¸ì´ë¥¼ ë°”ì´íŠ¸ ë‹¨ìœ„ë¡œ ì–»ëŠ”ë‹¤
+				byte[] buf = rs.getBytes("data");//getByteë©”ì„œë“œë¥¼ í†µí•´ ëª¨ë“  ë°”ì´íŠ¸ë¥¼ ë°”ì´íŠ¸ ë°°ì—´ë¡œ ê²€ìƒ‰í•œë‹¤
 				fos.write(buf, 0, len);
 			}
 
-		} catch (IOException | SQLException ex) {// ¿¹¿Ü°¡ ¹ß»ıÇÏ¸é ¿À·ù¸Ş½ÃÁö¸¦ ·Î±×·Î ±â·Ï
+		} catch (IOException | SQLException ex) {// ì˜ˆì™¸ê°€ ë°œìƒí•˜ë©´ ì˜¤ë¥˜ë©”ì‹œì§€ë¥¼ ë¡œê·¸ë¡œ ê¸°ë¡
 
 			Logger lgr = Logger.getLogger(JavaPostgreSqlReadImage.class.getName());
 			lgr.log(Level.SEVERE, ex.getMessage(), ex);
